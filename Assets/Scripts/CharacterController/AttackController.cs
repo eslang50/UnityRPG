@@ -2,29 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackController : MonoBehaviour
+namespace FantasyRpg.Combat
 {
-    private Animator animator;
-
-    private void Awake()
+    public class AttackController : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
-    }
+        private Animator animator;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        private void Awake()
         {
-            animator.SetTrigger("BasicAttackOne");
+            animator = GetComponent<Animator>();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+
+        // Update is called once per frame
+        void Update()
         {
-            animator.SetTrigger("SpecialAttackOne");
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            animator.SetTrigger("MeleeAttack");
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                animator.SetTrigger("BasicAttackOne");
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                animator.SetTrigger("SpecialAttackOne");
+            }
+            else if (Input.GetKeyDown(KeyCode.Q))
+            {
+                animator.SetTrigger("MeleeAttack");
+            }
         }
     }
 }
