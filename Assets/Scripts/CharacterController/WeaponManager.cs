@@ -1,3 +1,4 @@
+using Invector.vCharacterController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,9 @@ namespace FantasyRpg.Combat
     public class WeaponManager : MonoBehaviour
     {
         public GameObject weapon;
+        public vThirdPersonController tpc;
 
-        public void EnableWeaponCollider(bool isEnable)
+        public void EnableWeaponCollider(int isEnable)
         {
             if (weapon == null) return;
 
@@ -16,7 +18,15 @@ namespace FantasyRpg.Combat
 
             if (col == null) return;
 
-            col.enabled = isEnable;
+            col.enabled = isEnable == 1 ? true: false ;
+        }
+
+        public void EnableMovement(bool isEnable)
+        {
+            if (tpc == null) return;
+
+            tpc.lockMovement = !isEnable;
+            tpc.lockRotation = !isEnable;
         }
     }
 }
