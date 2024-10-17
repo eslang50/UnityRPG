@@ -27496,6 +27496,8 @@ MonoBehaviour:
   groundMinDistance: 0.25
   groundMaxDistance: 0.5
   slopeLimit: 75
+  lockMovement: 0
+  lockRotation: 0
 --- !u!95 &1293526081
 Animator:
   serializedVersion: 5
@@ -27578,6 +27580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 2007201373}
+  tpc: {fileID: 1293526080}
 --- !u!1 &1295323758
 GameObject:
   m_ObjectHideFlags: 0
