@@ -55,9 +55,10 @@ Material:
     m_Floats:
     - _Dissolve: 0
     - _EdgeWidth: 0.08
+    - _Power: 5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0.5
+    - _Smoothness: 0.43
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 0.13679248, g: 0.99145746, b: 1, a: 0}
