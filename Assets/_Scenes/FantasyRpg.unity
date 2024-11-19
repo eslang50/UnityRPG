@@ -356,6 +356,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5391011836006163916, guid: 4534b9cc6330aed499be54b02abf5283, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 635d5d802ac07462ea9a95ad521b2b8d, type: 2}
+    - target: {fileID: 6401258778785991962, guid: 4534b9cc6330aed499be54b02abf5283, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 635d5d802ac07462ea9a95ad521b2b8d, type: 2}
     - target: {fileID: 8468617057500289297, guid: 4534b9cc6330aed499be54b02abf5283, type: 3}
       propertyPath: m_LocalPosition.x
       value: 29.21
@@ -396,6 +404,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9066576789631251579, guid: 4534b9cc6330aed499be54b02abf5283, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 635d5d802ac07462ea9a95ad521b2b8d, type: 2}
     - target: {fileID: 9137032837993464747, guid: 4534b9cc6330aed499be54b02abf5283, type: 3}
       propertyPath: m_Name
       value: Dummy
@@ -22458,11 +22470,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b831d178b2d9c2845b5f4478c279c1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10000
+  health: 100
   attack: 1
   armor: 1
   critDamage: 1.5
   critChance: 0.1
+  skinnedMeshes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dissolveRate: 0.0125
+  refreshRate: 0.025
 --- !u!1 &1035650441
 GameObject:
   m_ObjectHideFlags: 0
@@ -27585,6 +27603,9 @@ MonoBehaviour:
   armor: 20
   critDamage: 1.5
   critChance: 0.3
+  skinnedMeshes: []
+  dissolveRate: 0.0125
+  refreshRate: 0.025
 --- !u!114 &1293526085
 MonoBehaviour:
   m_ObjectHideFlags: 0
