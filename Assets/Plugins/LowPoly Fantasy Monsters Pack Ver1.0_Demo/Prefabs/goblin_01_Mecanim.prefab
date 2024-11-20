@@ -25653,9 +25653,13 @@ GameObject:
   - component: {fileID: 9531154}
   - component: {fileID: 13593012}
   - component: {fileID: 5493012}
+  - component: {fileID: 8269342681884610525}
+  - component: {fileID: -442632387558132116}
+  - component: {fileID: 8416847936587827801}
+  - component: {fileID: 5460930513876494173}
   m_Layer: 0
   m_Name: goblin_01_Mecanim
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25749,3 +25753,81 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &8269342681884610525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b831d178b2d9c2845b5f4478c279c1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 30
+  attack: 5
+  armor: 1
+  critDamage: 1.5
+  critChance: 0.1
+  skinnedMeshes: []
+  dissolveRate: 0.0125
+  refreshRate: 0.025
+--- !u!195 &-442632387558132116
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193048}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &8416847936587827801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f2b342660fd4e00b5e863595ebceea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 1
+  idleDuration: 3
+  walkDuration: 4
+  followRange: 5
+  player: {fileID: 0}
+--- !u!111 &5460930513876494173
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193048}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 780b9591bd0e2cc41b8329c3900f3498, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 51589458bcd86c04e8b559428cbad013, type: 2}
+  - {fileID: 7400000, guid: 530bebfb33e22d74492e273020c166b0, type: 2}
+  - {fileID: 7400000, guid: 780b9591bd0e2cc41b8329c3900f3498, type: 2}
+  - {fileID: 7400000, guid: 99b591657f2302a439d72657db983b85, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
