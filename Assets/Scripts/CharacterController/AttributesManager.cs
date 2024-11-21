@@ -12,7 +12,6 @@ namespace FantasyRpg.Combat
         public float critDamage = 1.5f;
         public float critChance = 0.1f;
 
-
         public SkinnedMeshRenderer[] skinnedMeshes;
         public float dissolveRate = 0.0125f;
         public float refreshRate = 0.025f;
@@ -39,13 +38,13 @@ namespace FantasyRpg.Combat
             }
         }
 
-
         public void TakeDamage(int amount)
         {
-            int damageTaken = amount - (amount * armor / 100);
-            health = Mathf.Max(0, health - damageTaken);
+            int damageTaken = Mathf.Max(0, amount - (amount * armor / 100));  // Apply armor reduction
+            health = Mathf.Max(0, health - damageTaken);  // Reduce health, ensuring it doesn't go below zero
             Vector3 randomOffset = new Vector3(Random.Range(0f, 0.25f), Random.Range(0f, 0.25f), Random.Range(0f, 0.25f));
-            StatusPopUpGenerator.instance.CreatePopUp(transform.position + randomOffset, amount.ToString(), Color.yellow);
+            StatusPopUpGenerator.instance.CreatePopUp(transform.position + randomOffset, damageTaken.ToString(), Color.yellow);  // Show damage pop-up
+
             if (health <= 0)
             {
                 HandleDeath();
@@ -54,7 +53,7 @@ namespace FantasyRpg.Combat
 
         private void HandleDeath()
         {
-            StartCoroutine(Dissolve());
+            StartCoroutine(Dissolve());  // Start dissolve effect
         }
 
         private IEnumerator Dissolve()
@@ -72,22 +71,25 @@ namespace FantasyRpg.Combat
 
                         for (int i = 0; i < materials.Length; i++)
                         {
-                            materials[i].SetFloat("_Dissolve", counter);
+                            materials[i].SetFloat("_Dissolve", counter);  // Apply dissolve effect
                         }
                     }
                 }
                 yield return new WaitForSeconds(refreshRate);
             }
 
-            gameObject.SetActive(false);
+            gameObject.SetActive(false);  // Deactivate the game object after death
         }
-
 
         public void Attack(GameObject target)
         {
             var atm = target.GetComponent<AttributesManager>();
             if (atm == null) return;
-            atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? attack * critDamage : attack));
+
+            // Calculate damage with crit chance and damage
+            int damage = (int)(Random.Range(0f, 1f) < critChance ? attack * critDamage : attack);
+            atm.TakeDamage(damage);  // Apply the calculated damage to the target
         }
+
     }
 }
