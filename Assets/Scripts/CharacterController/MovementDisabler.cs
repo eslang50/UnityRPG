@@ -7,14 +7,12 @@ public class MovementDisabler : StateMachineBehaviour
 {
     private WeaponManager weaponManager;
     public bool enableMovement;
-    public bool enableRotation;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         weaponManager = animator.GetComponent<WeaponManager>();
         weaponManager.EnableMovement(enableMovement);
-        weaponManager.EnableRotation(enableRotation);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

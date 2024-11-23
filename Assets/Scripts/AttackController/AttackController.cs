@@ -14,6 +14,7 @@ namespace FantasyRpg.Combat
         public GameObject specialAttackTwoPrefab;
         public AttributesManager atm;
         private float _groundOffset = 0.75f;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -22,59 +23,29 @@ namespace FantasyRpg.Combat
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                animator.SetTrigger("BasicAttackOne");
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                animator.SetTrigger("SpecialAttackOne");
-            }
-            else if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 animator.SetTrigger("MeleeAttack");
             }
-            StartCoroutine(SpecialAttackOne());
-            SpecialAttackTwo();
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                StartCoroutine(SpecialAttackOne());
+            }
         }
+
+        private void UpdateUI() { }
 
         protected IEnumerator SpecialAttackOne()
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Vector3 worldPosition = GetMouseWorldPosition();
+            Vector3 position = GetMouseWorldPosition();
+            animator.SetTrigger("SpecialAttackOne");
+            yield return new WaitForSeconds(0.5f);
 
-                // Add offset if the raycast hit the ground
-                if (worldPosition != Vector3.zero)
-                {
-                    worldPosition.y += _groundOffset;
-                }
-                animator.SetTrigger("SpecialAttackOne");
-                yield return new WaitForSeconds(0.5f);
+            GameObject animationInstance = Instantiate(specialAttackOnePrefab, position, Quaternion.identity);
 
-                GameObject animationInstance = Instantiate(specialAttackOnePrefab, worldPosition, Quaternion.identity);
+            StartCoroutine(ApplyAreaOfEffect(position, 3f, 5, 1f, (int)(atm.attack * 1.5f)));
 
-                StartCoroutine(ApplyAreaOfEffect(worldPosition, 3f, 5, 1f, (int)(atm.attack * 1.5f)));
-
-                Destroy(animationInstance, 5f);
-            }
-        }
-
-        protected void SpecialAttackTwo()
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                Vector3 direction = (GetMouseWorldPosition() - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-
-                animator.SetTrigger("BasicAttackOne");
-
-                Vector3 startPosition = transform.position + transform.forward * 2f;
-
-                GameObject attackInstance = Instantiate(specialAttackTwoPrefab, startPosition, lookRotation);
-
-                Destroy(attackInstance, 2f);
-            }
+            Destroy(animationInstance, 5f);
         }
 
         private IEnumerator ApplyAreaOfEffect(Vector3 position, float radius, int duration, float interval, int tickDamage)

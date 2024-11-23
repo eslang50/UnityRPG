@@ -2,6 +2,7 @@ using Invector.vCharacterController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MovementDisabler;
 
 namespace FantasyRpg.Combat
 {
@@ -26,13 +27,6 @@ namespace FantasyRpg.Combat
             if (tpc == null) return;
 
             tpc.lockMovement = !isEnable;
-        }
-
-        public void EnableRotation(bool isEnable)
-        {
-            if (tpc == null) return;
-
-            tpc.lockRotation = !isEnable;
         }
     }
 }
