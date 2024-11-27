@@ -1,33 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace FantasyRpg.Combat
+public class AttackController : MonoBehaviour
 {
-    public class AttackController : MonoBehaviour
+    private Animator animator;
+    public GameObject projectilePrefab; // Assign the projectile prefab in the Inspector
+    public Transform projectileSpawnPoint; // The spawn point under the wand or hand
+
+    private void Awake()
     {
-        private Animator animator;
+        animator = GetComponent<Animator>();
+    }
 
-        private void Awake()
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) // Basic attack
         {
-            animator = GetComponent<Animator>();
+            animator.SetTrigger("BasicAttackOne");
+            FireProjectile(); // Fire the projectile when BasicAttackOne is triggered
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // Special attack
+        {
+            animator.SetTrigger("SpecialAttackOne");
+        }
+        else if (Input.GetKeyDown(KeyCode.Q)) // Melee attack
+        {
+            animator.SetTrigger("MeleeAttack");
+        }
+    }
 
-        // Update is called once per frame
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                animator.SetTrigger("BasicAttackOne");
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                animator.SetTrigger("SpecialAttackOne");
-            }
-            else if (Input.GetKeyDown(KeyCode.Q))
-            {
-                animator.SetTrigger("MeleeAttack");
-            }
-        }
+    void FireProjectile()
+    {
+        // Get the player's forward direction (the direction the player is facing)
+        Vector3 forwardDirection = transform.forward; // or use a specific bone like "projectileSpawnPoint.forward" if needed
+
+        // Instantiate the projectile at the spawn point and make it face the correct direction
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+
+        // Optional: If you want to ensure the projectile's forward direction is aligned with the player's facing direction:
+        projectile.transform.rotation = Quaternion.LookRotation(forwardDirection);
     }
 }

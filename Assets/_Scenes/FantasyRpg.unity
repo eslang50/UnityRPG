@@ -18542,6 +18542,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 944731799}
   - {fileID: 1732608362}
   m_Father: {fileID: 2056752333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -58.778}
@@ -20579,6 +20580,37 @@ Transform:
   m_Children:
   - {fileID: 2100517940}
   m_Father: {fileID: 2056752333}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &944731798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 944731799}
+  m_Layer: 0
+  m_Name: ProjectileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &944731799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944731798}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.108762935, y: 0.74050254, z: 0.641281, w: 0.16907203}
+  m_LocalPosition: {x: -0.001999748, y: 0.06300028, z: -0.04599956}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 852981048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &948679267
 GameObject:
@@ -32413,6 +32445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91b8d9beedb84b42b337ebec3dca537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 7587755570693078950, guid: 640b61aa566714ca2b41c629ba6b7f37, type: 3}
+  projectileSpawnPoint: {fileID: 944731799}
 --- !u!114 &1293526084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42926,8 +42960,8 @@ Transform:
   m_GameObject: {fileID: 1798261556}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000008630389, y: 0.0000000021174513, z: -0.014585881, w: 0.99989367}
-  m_LocalPosition: {x: 0.0000000017881393, y: 0.25913018, z: -0.000000026077032}
-  m_LocalScale: {x: 1.0000001, y: 0.99999934, z: 1}
+  m_LocalPosition: {x: 0, y: 0.25913018, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1254986132}
