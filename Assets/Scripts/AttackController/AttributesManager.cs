@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FantasyRpg.Combat
@@ -7,6 +8,7 @@ namespace FantasyRpg.Combat
     public class AttributesManager : MonoBehaviour
     {
         public string characterName = "Magician";
+
         public int maxHealth;
         public int currentHealth;
         public int maxMana;
@@ -14,6 +16,8 @@ namespace FantasyRpg.Combat
         public int maxXp;
         public int currentXp;
         public int currentLevel;
+
+        public int xpValue = 10;
 
         public int healthRegen = 1;
         public int manaRegen = 1;
@@ -69,6 +73,12 @@ namespace FantasyRpg.Combat
             var atm = target.GetComponent<AttributesManager>();
             if (atm == null) return;
             atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? attack * critDamage : attack));
+
+            if (atm.currentHealth <= 0)
+            {
+                GainExperience(atm.xpValue);
+                target.tag = "Corpse";
+            }
         }
 
         public void Attack(GameObject target, float damage)
@@ -76,6 +86,12 @@ namespace FantasyRpg.Combat
             var atm = target.GetComponent<AttributesManager>();
             if (atm == null) return;
             atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? damage * critDamage : damage));
+
+            if (atm.currentHealth <= 0)
+            {
+                GainExperience(atm.xpValue);
+                target.tag = "Corpse";
+            }
         }
 
         public void GainExperience(int amount)

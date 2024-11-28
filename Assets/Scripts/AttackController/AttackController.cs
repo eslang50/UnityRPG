@@ -10,15 +10,18 @@ namespace FantasyRpg.Combat
         public GameObject basicAttackOnePrefab;
         public GameObject specialAttackOnePrefab;
         public GameObject specialAttackTwoPrefab;
+        public GameObject specialAttackThreePrefab;
         public AttributesManager attributesManager;
 
         private int basicAttackOneLevel = 1;
         private int specialAttackOneLevel = 1;
         private int specialAttackTwoLevel = 1;
+        private int specialAttackThreeLevel = 1;
 
         private float basicAttackOneCd = 1f;
         private float specialAttackOneCd = 8f;
-        private float specialAttackTwoCd = 2f;
+        private float specialAttackTwoCd = 12f;
+        private float specialAttackThreeCd = 15f;
 
         private Dictionary<string, float> abilityCooldowns = new Dictionary<string, float>();
         private Dictionary<string, int> manaCosts = new Dictionary<string, int>();
@@ -36,10 +39,17 @@ namespace FantasyRpg.Combat
             abilityCooldowns["BasicAttackOne"] = 0f;
             abilityCooldowns["SpecialAttackOne"] = 0f;
             abilityCooldowns["SpecialAttackTwo"] = 0f;
+            abilityCooldowns["SpecialAttackThree"] = 0f;
 
             manaCosts["BasicAttackOne"] = 10;
-            manaCosts["SpecialAttackOne"] = 25;
+            manaCosts["SpecialAttackOne"] = 20;
             manaCosts["SpecialAttackTwo"] = 35;
+            manaCosts["SpecialAttackThree"] = 40;
+
+            GameObject.Find("AbilityOneText").GetComponent<TMPro.TextMeshProUGUI>().text = basicAttackOneLevel.ToString();
+            GameObject.Find("AbilityTwoText").GetComponent<TMPro.TextMeshProUGUI>().text = specialAttackOneLevel.ToString();
+            GameObject.Find("AbilityThreeText").GetComponent<TMPro.TextMeshProUGUI>().text = specialAttackTwoLevel.ToString();
+            GameObject.Find("AbilityFourText").GetComponent<TMPro.TextMeshProUGUI>().text = specialAttackThreeLevel.ToString();
         }
 
         // Update is called once per frame
@@ -49,7 +59,7 @@ namespace FantasyRpg.Combat
             {
                 animator.SetTrigger("MeleeAttack");
             }
-            else if (Input.GetKeyDown(KeyCode.F))
+            else if (Input.GetMouseButtonDown(0))
             {
                 if (Time.time >= abilityCooldowns["BasicAttackOne"])
                 {
@@ -68,6 +78,13 @@ namespace FantasyRpg.Combat
                 if (Time.time >= abilityCooldowns["SpecialAttackTwo"])
                 {
                     StartCoroutine(SpecialAttackTwo());
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (Time.time >= abilityCooldowns["SpecialAttackThree"])
+                {
+                    StartCoroutine(SpecialAttackThree());
                 }
             }
         }
@@ -143,6 +160,36 @@ namespace FantasyRpg.Combat
             specialAttackInstance.AddComponent<WaveAttackCollider>().Initialize(attributesManager, (int)(attributesManager.attack * 3.0f));
         }
 
+        protected IEnumerator SpecialAttackThree()
+        {
+            if (attributesManager.currentMana < manaCosts["SpecialAttackThree"])
+            {
+                yield break;
+            }
+            attributesManager.currentMana -= manaCosts["SpecialAttackThree"];
+            abilityCooldowns["SpecialAttackThree"] = Time.time + specialAttackThreeCd;
+
+            animator.SetTrigger("SpecialAttackOne");
+            yield return new WaitForSeconds(0.5f);
+
+            Vector3 position = GetMouseWorldPosition();
+            GameObject animationInstance = Instantiate(specialAttackThreePrefab, position, Quaternion.identity);
+
+            yield return new WaitForSeconds(3f); // Delay before applying damage
+
+            Collider[] colliders = Physics.OverlapSphere(position, 3f);
+            foreach (var other in colliders)
+            {
+                if (other.CompareTag("Enemy"))
+                {
+                    attributesManager.Attack(other.gameObject, (int)(attributesManager.attack * 5.0f));
+                    StartCoroutine(ApplyDamageOverTime(other, 5, 1f, (int)(attributesManager.attack * 0.5f)));
+                }
+            }
+
+            Destroy(animationInstance, 5f);
+        }
+
         private IEnumerator ApplyAreaOfEffect(Vector3 position, float radius, int duration, float interval, int tickDamage)
         {
             for (int i = 0; i < duration; i++)
@@ -159,16 +206,13 @@ namespace FantasyRpg.Combat
             }
         }
 
-        private IEnumerator ApplyDamageOverTime(Collider[] colliders, int duration, float interval, int tickDamage)
+        private IEnumerator ApplyDamageOverTime(Collider collider, int duration, float interval, int tickDamage)
         {
             for (int i = 0; i < duration; i++)
             {
-                foreach (var other in colliders)
+                if (collider.CompareTag("Enemy"))
                 {
-                    if (other.CompareTag("Enemy"))
-                    {
-                        attributesManager.Attack(other.gameObject, tickDamage);
-                    }
+                    attributesManager.Attack(collider.gameObject, tickDamage);
                 }
                 yield return new WaitForSeconds(interval);
             }
