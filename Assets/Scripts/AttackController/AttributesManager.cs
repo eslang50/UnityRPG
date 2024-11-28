@@ -62,5 +62,12 @@ namespace FantasyRpg.Combat
             if (atm == null) return;
             atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? attack * critDamage : attack));
         }
+
+        public void Attack(GameObject target, float damage)
+        {
+            var atm = target.GetComponent<AttributesManager>();
+            if (atm == null) return;
+            atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? damage * critDamage : damage));
+        }
     }
 }
