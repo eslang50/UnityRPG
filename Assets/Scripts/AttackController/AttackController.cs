@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FantasyRpg.Combat
 {
@@ -28,6 +30,26 @@ namespace FantasyRpg.Combat
 
         private float _groundOffset = 0.75f;
 
+        [Header("UI items for Spell Cooldown")]
+        [SerializeField]
+        private Image basicAttackOneCooldownImage;
+        [SerializeField]
+        private TMP_Text basicAttackOneCooldownText;
+
+        [SerializeField]
+        private Image specialAttackOneCooldownImage;
+        [SerializeField]
+        private TMP_Text specialAttackOneCooldownText;
+
+        [SerializeField]
+        private Image specialAttackTwoCooldownImage;
+        [SerializeField]
+        private TMP_Text specialAttackTwoCooldownText;
+
+        [SerializeField]
+        private Image specialAttackThreeCooldownImage;
+        [SerializeField]
+        private TMP_Text specialAttackThreeCooldownText;
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -52,7 +74,6 @@ namespace FantasyRpg.Combat
             GameObject.Find("AbilityFourText").GetComponent<TMPro.TextMeshProUGUI>().text = specialAttackThreeLevel.ToString();
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Q))
@@ -87,9 +108,34 @@ namespace FantasyRpg.Combat
                     StartCoroutine(SpecialAttackThree());
                 }
             }
+            UpdateCooldownUI();
         }
 
-        private void UpdateUI() { }
+        private void UpdateCooldownUI()
+        {
+            UpdateCooldown("BasicAttackOne", basicAttackOneCooldownImage, basicAttackOneCooldownText, basicAttackOneCd);
+            UpdateCooldown("SpecialAttackOne", specialAttackOneCooldownImage, specialAttackOneCooldownText, specialAttackOneCd);
+            UpdateCooldown("SpecialAttackTwo", specialAttackTwoCooldownImage, specialAttackTwoCooldownText, specialAttackTwoCd);
+            UpdateCooldown("SpecialAttackThree", specialAttackThreeCooldownImage, specialAttackThreeCooldownText, specialAttackThreeCd);
+        }
+
+        private void UpdateCooldown(string ability, Image cooldownImage, TMP_Text cooldownText, float cooldownTime)
+        {
+            float cooldownTimer = abilityCooldowns[ability] - Time.time;
+            if (cooldownTimer < 0.0f)
+            {
+                cooldownText.gameObject.SetActive(false);
+                cooldownImage.gameObject.SetActive(false);
+                cooldownImage.fillAmount = 0.0f;
+            }
+            else
+            {
+                cooldownText.gameObject.SetActive(true);
+                cooldownImage.gameObject.SetActive(true);
+                cooldownText.text = Mathf.RoundToInt(cooldownTimer).ToString();
+                cooldownImage.fillAmount = cooldownTimer / cooldownTime;
+            }
+        }
 
         protected IEnumerator BasicAttackOne()
         {
