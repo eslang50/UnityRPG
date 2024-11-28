@@ -20,6 +20,11 @@ namespace FantasyRpg.Combat
             {
                 enemyAtm.Attack(playerAtm.gameObject);
             }
+
+            if (Input.GetKeyDown(KeyCode.F10))
+            {
+                playerAtm.GainExperience(10);
+            }
         }
     }
 }

@@ -1,39 +1,43 @@
 using FantasyRpg.Combat;
 using UnityEngine;
 
-public class ProjectileCollider : MonoBehaviour
+
+namespace FantasyRpg.Combat
 {
-    private AttributesManager attributesManager;
-    private int damage;
-    private float speed = 10f;
-
-    public void Initialize(AttributesManager attributesManager, int damage)
+    public class ProjectileCollider : MonoBehaviour
     {
-        this.attributesManager = attributesManager;
-        this.damage = damage;
-    }
+        private AttributesManager attributesManager;
+        private int damage;
+        private float speed = 25f;
 
-    private void Update()
-    {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
+        public void Initialize(AttributesManager attributesManager, int damage)
         {
-            attributesManager.Attack(other.gameObject, damage);
-            Destroy(gameObject);
+            this.attributesManager = attributesManager;
+            this.damage = damage;
         }
-        else if (other.CompareTag("Obstacle"))
-        {
-            Destroy(gameObject);
-        }
-    }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, GetComponent<Collider>().bounds.size);
+        private void Update()
+        {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Enemy"))
+            {
+                attributesManager.Attack(other.gameObject, damage);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(transform.position, GetComponent<Collider>().bounds.size);
+        }
     }
 }

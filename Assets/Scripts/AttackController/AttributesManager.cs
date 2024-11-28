@@ -11,13 +11,20 @@ namespace FantasyRpg.Combat
         public int currentHealth;
         public int maxMana;
         public int currentMana;
-        public int healthRegen;
-        public int manaRegen;
+        public int maxXp;
+        public int currentXp;
+        public int currentLevel;
+
+        public int healthRegen = 1;
+        public int manaRegen = 1;
         public int attack;
-        public int armor;
+        public int armor;   
+
         public float critDamage = 1.5f;
         public float critChance = 0.1f;
+
         public event System.Action<int> OnTakeDamage;
+        public event System.Action<int> OnLevelUp;
 
         private float timeSinceLastHit = 0f;
         private const float regenDelay = 3f;
@@ -26,6 +33,7 @@ namespace FantasyRpg.Combat
         {
             StartCoroutine(RegenerateHealthMana());
             GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshProUGUI>().text = characterName;
+            GameObject.Find("LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = currentLevel.ToString();
         }
         private void Update()
         {
@@ -68,6 +76,32 @@ namespace FantasyRpg.Combat
             var atm = target.GetComponent<AttributesManager>();
             if (atm == null) return;
             atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? damage * critDamage : damage));
+        }
+
+        public void GainExperience(int amount)
+        {
+            currentXp += amount;
+            if (currentXp >= maxXp)
+            {
+                currentLevel++;
+                currentXp -= maxXp;
+
+                // Calculate next level Xp required to level up
+                maxXp = Mathf.CeilToInt(maxXp * 1.15f);
+
+                // Increase attributes
+                maxHealth += 10;
+                currentHealth = maxHealth;
+                maxMana += 5;
+                currentMana = maxMana;
+                attack += 2;
+                armor += 1;
+
+                OnLevelUp?.Invoke(currentLevel);
+
+                // Update UI
+                GameObject.Find("LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = currentLevel.ToString();
+            }
         }
     }
 }

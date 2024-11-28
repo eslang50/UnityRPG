@@ -13,11 +13,10 @@ namespace FantasyRpg.Combat
         public AttributesManager attributesManager;
 
         private int basicAttackOneLevel = 1;
-        private int meleeAttackLevel = 1;
         private int specialAttackOneLevel = 1;
         private int specialAttackTwoLevel = 1;
 
-        private float basicAttackOneCd = 2f;
+        private float basicAttackOneCd = 1f;
         private float specialAttackOneCd = 8f;
         private float specialAttackTwoCd = 2f;
 
@@ -54,7 +53,7 @@ namespace FantasyRpg.Combat
             {
                 if (Time.time >= abilityCooldowns["BasicAttackOne"])
                 {
-                    BasicAttackOne();
+                    StartCoroutine(BasicAttackOne());
                 }
             }
             else if (Input.GetKeyDown(KeyCode.E))
@@ -75,12 +74,17 @@ namespace FantasyRpg.Combat
 
         private void UpdateUI() { }
 
-        protected void BasicAttackOne()
+        protected IEnumerator BasicAttackOne()
         {
             if (attributesManager.currentMana < manaCosts["BasicAttackOne"])
             {
-                return;
+                yield break;
             }
+            attributesManager.currentMana -= manaCosts["BasicAttackOne"];
+            abilityCooldowns["BasicAttackOne"] = Time.time + basicAttackOneCd;
+
+            animator.SetTrigger("BasicAttackOne");
+            yield return new WaitForSeconds(0.25f);
 
             Vector3 mousePosition = GetMouseWorldPosition();
             Vector3 direction = (mousePosition - transform.position).normalized;
@@ -88,13 +92,8 @@ namespace FantasyRpg.Combat
 
             Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction;
 
-            animator.SetTrigger("BasicAttackOne");
-
             GameObject projectileInstance = Instantiate(basicAttackOnePrefab, spawnPosition, Quaternion.LookRotation(direction));
             projectileInstance.GetComponent<ProjectileCollider>().Initialize(attributesManager, (int)(attributesManager.attack * 1.25f));
-
-            attributesManager.currentMana -= manaCosts["BasicAttackOne"];
-            abilityCooldowns["BasicAttackOne"] = Time.time + basicAttackOneCd;
         }
 
         protected IEnumerator SpecialAttackOne()
@@ -103,6 +102,8 @@ namespace FantasyRpg.Combat
             {
                 yield break;
             }
+            attributesManager.currentMana -= manaCosts["SpecialAttackOne"];
+            abilityCooldowns["SpecialAttackOne"] = Time.time + specialAttackOneCd;
 
             Vector3 position = GetMouseWorldPosition();
             animator.SetTrigger("SpecialAttackOne");
@@ -113,9 +114,6 @@ namespace FantasyRpg.Combat
             StartCoroutine(ApplyAreaOfEffect(position, 3f, 5, 1f, (int)(attributesManager.attack * 1.5f)));
 
             Destroy(animationInstance, 5f);
-
-            attributesManager.currentMana -= manaCosts["SpecialAttackOne"];
-            abilityCooldowns["SpecialAttackOne"] = Time.time + specialAttackOneCd;
         }
 
         protected IEnumerator SpecialAttackTwo()
@@ -124,13 +122,15 @@ namespace FantasyRpg.Combat
             {
                 yield break;
             }
+            attributesManager.currentMana -= manaCosts["SpecialAttackTwo"];
+            abilityCooldowns["SpecialAttackTwo"] = Time.time + specialAttackTwoCd;
+
+            animator.SetTrigger("BasicAttackOne");
+            yield return new WaitForSeconds(0.5f);
 
             Vector3 mousePosition = GetMouseWorldPosition();
             Vector3 direction = (mousePosition - transform.position).normalized;
             direction.y = 0;
-
-            animator.SetTrigger("BasicAttackOne");
-            yield return new WaitForSeconds(0.5f);
 
             GameObject specialAttackInstance = Instantiate(specialAttackTwoPrefab, transform.position, Quaternion.LookRotation(direction));
 
@@ -141,9 +141,6 @@ namespace FantasyRpg.Combat
             boxCollider.isTrigger = true;
 
             specialAttackInstance.AddComponent<WaveAttackCollider>().Initialize(attributesManager, (int)(attributesManager.attack * 3.0f));
-
-            attributesManager.currentMana -= manaCosts["SpecialAttackTwo"];
-            abilityCooldowns["SpecialAttackTwo"] = Time.time + specialAttackTwoCd;
         }
 
         private IEnumerator ApplyAreaOfEffect(Vector3 position, float radius, int duration, float interval, int tickDamage)
