@@ -25051,18 +25051,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e144280085be69a488f25605fd66fc7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Magician
-  maxHealth: 0
-  currentHealth: 0
-  maxMana: 0
-  currentMana: 0
-  maxXp: 0
-  currentXp: 0
-  currentLevel: 0
-  xpValue: 10
-  healthRegen: 1
-  manaRegen: 1
-  attack: 1
+  characterName: Golem
+  maxHealth: 100
+  currentHealth: 100
+  maxMana: 100
+  currentMana: 1
+  maxXp: 10
+  currentXp: 1
+  currentLevel: 1
+  xpValue: 100
+  healthRegen: 0
+  manaRegen: 0
+  attack: 10
   armor: 0
   critDamage: 1.5
   critChance: 0.1
