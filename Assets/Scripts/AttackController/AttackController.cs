@@ -153,7 +153,8 @@ namespace FantasyRpg.Combat
             Vector3 direction = (mousePosition - transform.position).normalized;
             direction.y = 0;
 
-            Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction;
+            float distanceMultiplier = 2.5f;
+            Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction * distanceMultiplier;
 
             GameObject projectileInstance = Instantiate(basicAttackOnePrefab, spawnPosition, Quaternion.LookRotation(direction));
             projectileInstance.GetComponent<ProjectileCollider>().Initialize(attributesManager, (int)(attributesManager.attack * 1.25f));
