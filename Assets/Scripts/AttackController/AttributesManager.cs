@@ -33,11 +33,34 @@ namespace FantasyRpg.Combat
         private float timeSinceLastHit = 0f;
         private const float regenDelay = 3f;
 
+        public SkinnedMeshRenderer[] skinnedMeshes;
+        public float dissolveRate = 0.0125f;
+        public float refreshRate = 0.025f;
+
+        private Material[] skinnedMaterials;
+
         private void Start()
         {
             StartCoroutine(RegenerateHealthMana());
             GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshProUGUI>().text = characterName;
             GameObject.Find("LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = currentLevel.ToString();
+
+            if (skinnedMeshes == null || skinnedMeshes.Length == 0)
+            {
+                skinnedMeshes = GetComponentsInChildren<SkinnedMeshRenderer>();
+            }
+
+            if (skinnedMeshes != null && skinnedMeshes.Length > 0)
+            {
+                foreach (var skinnedMesh in skinnedMeshes)
+                {
+                    skinnedMaterials = skinnedMesh.materials;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No SkinnedMeshRenderers found on the GameObject or its children.");
+            }
         }
         private void Update()
         {
@@ -66,6 +89,40 @@ namespace FantasyRpg.Combat
 
             // Reset the timer since the player was hit
             timeSinceLastHit = 0f;
+
+            if (currentHealth <= 0)
+            {
+                HandleDeath();
+            }
+        }
+        private void HandleDeath()
+        {
+            StartCoroutine(Dissolve());  // Start dissolve effect
+        }
+
+        private IEnumerator Dissolve()
+        {
+            float counter = 0;
+            while (counter < 1)
+            {
+                counter += dissolveRate;
+
+                foreach (var skinnedMesh in skinnedMeshes)
+                {
+                    if (skinnedMesh != null)
+                    {
+                        Material[] materials = skinnedMesh.materials;
+
+                        for (int i = 0; i < materials.Length; i++)
+                        {
+                            materials[i].SetFloat("_Dissolve", counter);  // Apply dissolve effect
+                        }
+                    }
+                }
+                yield return new WaitForSeconds(refreshRate);
+            }
+
+            gameObject.SetActive(false);  // Deactivate the game object after death
         }
 
         public void Attack(GameObject target)
