@@ -25356,9 +25356,14 @@ GameObject:
   - component: {fileID: 9573564}
   - component: {fileID: 13580392}
   - component: {fileID: 5480392}
+  - component: {fileID: 5309937888891770733}
+  - component: {fileID: 6427902342831680722}
+  - component: {fileID: -6681778331455032298}
+  - component: {fileID: -2082210566115507109}
+  - component: {fileID: -9088728987525641545}
   m_Layer: 0
   m_Name: wolf_02_Mecanim
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25373,7 +25378,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 480468}
@@ -25451,3 +25456,105 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!195 &5309937888891770733
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180470}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 4
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &6427902342831680722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f2b342660fd4e00b5e863595ebceea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 1
+  idleDuration: 0.5
+  walkDuration: 3
+  followRange: 10
+  attackRange: 1.5
+  attackCooldown: 2
+  player: {fileID: 0}
+--- !u!114 &-6681778331455032298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7aa35e601ac446d924eac16064c30a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!111 &-2082210566115507109
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180470}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 7994e6b606d3ec2498fab142dbf483e7, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: b0515862e5e052b4c907c7c556b49104, type: 2}
+  - {fileID: 7400000, guid: 7994e6b606d3ec2498fab142dbf483e7, type: 2}
+  - {fileID: 7400000, guid: c482f2ec08e02da43924ca0ea40f7ef7, type: 2}
+  - {fileID: 7400000, guid: b8619be242d5e9f4d95b3b33d799316c, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &-9088728987525641545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e144280085be69a488f25605fd66fc7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Wolf
+  maxHealth: 60
+  currentHealth: 60
+  maxMana: 0
+  currentMana: 0
+  maxXp: 0
+  currentXp: 0
+  currentLevel: 0
+  xpValue: 10
+  healthRegen: 1
+  manaRegen: 1
+  attack: 5
+  armor: 0
+  critDamage: 1.5
+  critChance: 0.1
+  skinnedMeshes: []
+  dissolveRate: 0.1
+  refreshRate: 0.025

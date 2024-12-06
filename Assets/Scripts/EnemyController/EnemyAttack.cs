@@ -6,7 +6,7 @@ namespace FantasyRpg.Combat
 {
     public class GoblinAttack : MonoBehaviour
     {
-        public GameObject player; // Reference to the player object
+        private GameObject player; // Reference to the player object
         private AttributesManager playerAttributes;
 
         private void Start()

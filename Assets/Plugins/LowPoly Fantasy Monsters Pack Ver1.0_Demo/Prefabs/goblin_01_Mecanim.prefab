@@ -25653,11 +25653,11 @@ GameObject:
   - component: {fileID: 9531154}
   - component: {fileID: 13593012}
   - component: {fileID: 5493012}
-  - component: {fileID: 8269342681884610525}
   - component: {fileID: -442632387558132116}
   - component: {fileID: 8416847936587827801}
   - component: {fileID: 5460930513876494173}
   - component: {fileID: 1433251484994751043}
+  - component: {fileID: 4328661156398881374}
   m_Layer: 0
   m_Name: goblin_01_Mecanim
   m_TagString: Enemy
@@ -25754,26 +25754,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
---- !u!114 &8269342681884610525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b831d178b2d9c2845b5f4478c279c1e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 30
-  attack: 5
-  armor: 1
-  critDamage: 1.5
-  critChance: 0.1
-  skinnedMeshes: []
-  dissolveRate: 0.025
-  refreshRate: 0.025
 --- !u!195 &-442632387558132116
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25846,4 +25826,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7aa35e601ac446d924eac16064c30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+--- !u!114 &4328661156398881374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e144280085be69a488f25605fd66fc7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Goblin
+  maxHealth: 50
+  currentHealth: 50
+  maxMana: 0
+  currentMana: 0
+  maxXp: 0
+  currentXp: 0
+  currentLevel: 0
+  xpValue: 10
+  healthRegen: 2
+  manaRegen: 0
+  attack: 10
+  armor: 2
+  critDamage: 1.5
+  critChance: 0.1
+  skinnedMeshes: []
+  dissolveRate: 0.1
+  refreshRate: 0.025
