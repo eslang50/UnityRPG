@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 8099180457986642130}
   - component: {fileID: 1820590128290714100}
   - component: {fileID: 2770451685378152957}
-  - component: {fileID: 3432753818970201788}
-  - component: {fileID: 4852578115237216180}
+  - component: {fileID: 8398847645960550482}
   m_Layer: 5
   m_Name: StatusMarker
   m_TagString: Untagged
@@ -58,7 +57,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -104,7 +103,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3432753818970201788
+--- !u!114 &8398847645960550482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,7 +112,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2744986316011059118}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10c60c20630436f44b718507ab00cdd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 09ed5b9ba8a735b4a8769968343d7b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   opacityCurve:
@@ -154,7 +153,7 @@ MonoBehaviour:
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -215,18 +214,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4852578115237216180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2744986316011059118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d89e0c376d79354e82acd25d7737fa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2877034575640655052
 GameObject:
   m_ObjectHideFlags: 0

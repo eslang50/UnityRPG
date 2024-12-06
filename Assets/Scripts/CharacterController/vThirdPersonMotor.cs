@@ -113,15 +113,15 @@ namespace Invector.vCharacterController
             // slides the character through walls and edges
             frictionPhysics = new PhysicMaterial();
             frictionPhysics.name = "frictionPhysics";
-            frictionPhysics.staticFriction = 1f;
-            frictionPhysics.dynamicFriction = 1f;
+            frictionPhysics.staticFriction = 2.5f;
+            frictionPhysics.dynamicFriction = 2.5f;
             frictionPhysics.frictionCombine = PhysicMaterialCombine.Multiply;
 
             // prevents the collider from slipping on ramps
             maxFrictionPhysics = new PhysicMaterial();
             maxFrictionPhysics.name = "maxFrictionPhysics";
-            maxFrictionPhysics.staticFriction = 1f;
-            maxFrictionPhysics.dynamicFriction = 1f;
+            maxFrictionPhysics.staticFriction = 2.5f;
+            maxFrictionPhysics.dynamicFriction = 2.5f;
             maxFrictionPhysics.frictionCombine = PhysicMaterialCombine.Maximum;
 
             // air physics 
