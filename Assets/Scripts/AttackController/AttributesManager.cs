@@ -87,12 +87,43 @@ namespace FantasyRpg.Combat
             StatusPopUpGenerator.instance.CreatePopUp(transform.position + randomOffset, amount.ToString(), Color.yellow);
             OnTakeDamage?.Invoke(amount);
 
+            // Trigger red flash effect
+            StartCoroutine(FlashRed());
+
             // Reset the timer since the player was hit
             timeSinceLastHit = 0f;
 
             if (currentHealth <= 0)
             {
                 HandleDeath();
+            }
+        }
+
+        // Coroutine to flash red on damage
+        private IEnumerator FlashRed()
+        {
+            if (skinnedMeshes != null && skinnedMeshes.Length > 0)
+            {
+                foreach (var skinnedMesh in skinnedMeshes)
+                {
+                    foreach (var material in skinnedMesh.materials)
+                    {
+                        material.color = Color.red; // Set to red
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(0.2f); // Flash duration
+
+            if (skinnedMeshes != null && skinnedMeshes.Length > 0)
+            {
+                foreach (var skinnedMesh in skinnedMeshes)
+                {
+                    foreach (var material in skinnedMesh.materials)
+                    {
+                        material.color = Color.white; // Reset to white (or original color)
+                    }
+                }
             }
         }
         private void HandleDeath()
