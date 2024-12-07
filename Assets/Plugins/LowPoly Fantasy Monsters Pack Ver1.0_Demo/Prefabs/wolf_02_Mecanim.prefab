@@ -25509,6 +25509,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7aa35e601ac446d924eac16064c30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 1.5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!111 &-2082210566115507109
 Animation:
   m_ObjectHideFlags: 0
