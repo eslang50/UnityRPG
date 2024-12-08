@@ -11,9 +11,11 @@ namespace FantasyRpg.Combat
         public AttributesManager attributesManager;
         public Color flinchColor = Color.red;
         public float flinchDuration = 0.1f;
+        public bool isPlayer = false;
 
         private Color originalColor;
         private Image healthBarImage;
+        private CanvasGroup canvasGroup;
 
         private void Start()
         {
@@ -25,6 +27,18 @@ namespace FantasyRpg.Combat
             healthBarImage = healthSlider.fillRect.GetComponent<Image>();
             originalColor = healthBarImage.color;
 
+            // Get the CanvasGroup component to control visibility
+            if (!isPlayer)
+            {
+                canvasGroup = GetComponent<CanvasGroup>();
+                if (canvasGroup == null)
+                {
+                    canvasGroup = gameObject.AddComponent<CanvasGroup>();
+                }
+
+                // Set the health bar to be invisible initially
+                canvasGroup.alpha = 0;
+            }
             // Subscribe to the TakeDamage event
             attributesManager.OnTakeDamage += HandleTakeDamage;
         }
@@ -37,8 +51,8 @@ namespace FantasyRpg.Combat
 
         private void HandleTakeDamage(int damage)
         {
-            // Update the slider value
-            healthSlider.value = attributesManager.currentHealth;
+            // Make the health bar visible
+            canvasGroup.alpha = 1;
 
             StartCoroutine(FlinchEffect());
         }
