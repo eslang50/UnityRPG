@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace FantasyRpg.Combat
 {
@@ -83,8 +84,13 @@ namespace FantasyRpg.Combat
         public void TakeDamage(int amount, Color? color = null)
         {
             currentHealth -= amount - (amount * armor / 100);
-            Vector3 fixedOffset = new Vector3(0, 2, 0);
-            StatusPopUpGenerator.instance.CreatePopUp(transform.position + fixedOffset, amount.ToString(), color ?? Color.yellow);
+
+            // Get the NavMeshAgent's position if possible
+            NavMeshAgent navMeshAgent = GetComponent<NavMeshAgent>();
+            Vector3 popUpPosition = navMeshAgent != null ? navMeshAgent.transform.position : transform.position;
+            Vector3 randomOffset = new Vector3(Random.Range(0f, 0.25f), Random.Range(0f, 0.25f), Random.Range(0f, 0.25f));
+
+            StatusPopUpGenerator.instance.CreatePopUp(popUpPosition + randomOffset, amount.ToString(), color ?? Color.yellow);
             OnTakeDamage?.Invoke(amount);
 
             // Reset the timer since the player was hit

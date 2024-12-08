@@ -152,7 +152,7 @@ namespace FantasyRpg.Combat
             Vector3 mousePosition = GetMouseWorldPosition();
             Vector3 direction = (mousePosition - transform.position).normalized;
 
-            float distanceMultiplier = 2.5f;
+            float distanceMultiplier = 1.5f;
             Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction * distanceMultiplier;
 
             GameObject projectileInstance = Instantiate(basicAttackOnePrefab, spawnPosition, Quaternion.LookRotation(direction));
