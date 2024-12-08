@@ -8,7 +8,7 @@ namespace FantasyRpg.Combat
     public class HealthBar : MonoBehaviour
     {
         public Slider healthSlider;
-        public AttributesManager attributesManager; // Reference to the player's attributes manager
+        public AttributesManager attributesManager;
         public Color flinchColor = Color.red;
         public float flinchDuration = 0.1f;
 
@@ -37,6 +37,9 @@ namespace FantasyRpg.Combat
 
         private void HandleTakeDamage(int damage)
         {
+            // Update the slider value
+            healthSlider.value = attributesManager.currentHealth;
+
             StartCoroutine(FlinchEffect());
         }
 

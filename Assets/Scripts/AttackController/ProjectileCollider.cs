@@ -14,6 +14,7 @@ namespace FantasyRpg.Combat
         {
             this.attributesManager = attributesManager;
             this.damage = damage;
+            Destroy(gameObject, 3f);
         }
 
         private void Update()

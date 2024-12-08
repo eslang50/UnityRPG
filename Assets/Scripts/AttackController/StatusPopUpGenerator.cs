@@ -16,7 +16,7 @@ public class StatusPopUpGenerator : MonoBehaviour
 
     public void CreatePopUp(Vector3 pos, string text, Color color)
     {
-        var popUp = Instantiate(damagePopUpPrefab, pos + new Vector3(0, 1, 0), Quaternion.identity);
+        var popUp = Instantiate(damagePopUpPrefab, pos, Quaternion.identity);
         var t = popUp.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
         t.text = text;
         t.faceColor = color;

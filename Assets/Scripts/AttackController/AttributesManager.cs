@@ -80,11 +80,11 @@ namespace FantasyRpg.Combat
             }
         }
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(int amount, Color? color = null)
         {
             currentHealth -= amount - (amount * armor / 100);
-            Vector3 randomOffset = new Vector3(Random.Range(0f, 0.25f), Random.Range(0f, 0.25f), Random.Range(0f, 0.25f));
-            StatusPopUpGenerator.instance.CreatePopUp(transform.position + randomOffset, amount.ToString(), Color.yellow);
+            Vector3 fixedOffset = new Vector3(0, 2, 0);
+            StatusPopUpGenerator.instance.CreatePopUp(transform.position + fixedOffset, amount.ToString(), color ?? Color.yellow);
             OnTakeDamage?.Invoke(amount);
 
             // Reset the timer since the player was hit
@@ -95,6 +95,7 @@ namespace FantasyRpg.Combat
                 HandleDeath();
             }
         }
+
         private void HandleDeath()
         {
             StartCoroutine(Dissolve());  // Start dissolve effect
@@ -125,24 +126,12 @@ namespace FantasyRpg.Combat
             gameObject.SetActive(false);  // Deactivate the game object after death
         }
 
-        public void Attack(GameObject target)
+        public void Attack(GameObject target, float? damage = null, Color? color = null)
         {
             var atm = target.GetComponent<AttributesManager>();
             if (atm == null) return;
-            atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? attack * critDamage : attack));
-
-            if (atm.currentHealth <= 0)
-            {
-                GainExperience(atm.xpValue);
-                target.tag = "Corpse";
-            }
-        }
-
-        public void Attack(GameObject target, float damage)
-        {
-            var atm = target.GetComponent<AttributesManager>();
-            if (atm == null) return;
-            atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? damage * critDamage : damage));
+            float actualDamage = damage ?? attack;
+            atm.TakeDamage((int)(Random.Range(0f, 1f) < critChance ? actualDamage * critDamage : actualDamage), color);
 
             if (atm.currentHealth <= 0)
             {
