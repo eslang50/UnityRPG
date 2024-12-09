@@ -9681,7 +9681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 363361940}
   attributesManager: {fileID: 1293526084}
-  flinchColor: {r: 1, g: 0.0990566, b: 0.2981021, a: 1}
+  flinchColor: {r: 1, g: 0.2783019, b: 0.2783019, a: 1}
   flinchDuration: 0.1
   isPlayer: 1
 --- !u!114 &363361940

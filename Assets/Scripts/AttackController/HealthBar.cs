@@ -27,15 +27,16 @@ namespace FantasyRpg.Combat
             healthBarImage = healthSlider.fillRect.GetComponent<Image>();
             originalColor = healthBarImage.color;
 
-            // Get the CanvasGroup component to control visibility
+            canvasGroup = GetComponent<CanvasGroup>();
+
+            // Get the CanvasGroup component to control visibility   
+            if (canvasGroup == null)
+            {
+                canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            }
+
             if (!isPlayer)
             {
-                canvasGroup = GetComponent<CanvasGroup>();
-                if (canvasGroup == null)
-                {
-                    canvasGroup = gameObject.AddComponent<CanvasGroup>();
-                }
-
                 // Set the health bar to be invisible initially
                 canvasGroup.alpha = 0;
             }
