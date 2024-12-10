@@ -151,9 +151,8 @@ namespace FantasyRpg.Combat
 
             Vector3 mousePosition = GetMouseWorldPosition();
             Vector3 direction = (mousePosition - transform.position).normalized;
-            direction.y = 0;
 
-            float distanceMultiplier = 2.5f;
+            float distanceMultiplier = 1.5f;
             Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction * distanceMultiplier;
 
             GameObject projectileInstance = Instantiate(basicAttackOnePrefab, spawnPosition, Quaternion.LookRotation(direction));
@@ -224,7 +223,7 @@ namespace FantasyRpg.Combat
 
             yield return new WaitForSeconds(3f); // Delay before applying damage
 
-            Collider[] colliders = Physics.OverlapSphere(position, 3f);
+            Collider[] colliders = Physics.OverlapSphere(position, 3.5f);
             foreach (var other in colliders)
             {
                 if (other.CompareTag("Enemy"))
@@ -257,11 +256,12 @@ namespace FantasyRpg.Combat
         {
             for (int i = 0; i < duration; i++)
             {
+                yield return new WaitForSeconds(interval);
+
                 if (collider.CompareTag("Enemy"))
                 {
-                    attributesManager.Attack(collider.gameObject, tickDamage);
+                    attributesManager.Attack(collider.gameObject, tickDamage, new Color(0.5f, 0f, 0.5f));
                 }
-                yield return new WaitForSeconds(interval);
             }
         }
 

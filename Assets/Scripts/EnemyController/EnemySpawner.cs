@@ -45,34 +45,10 @@ public class EnemySpawner : MonoBehaviour
                 GameObject enemyInstance = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
                 enemyInstance.tag = "Enemy";
                 enemyInstance.layer = LayerMask.NameToLayer("Enemy");
-
-                // Attach AttributesManager component and initialize stats
-                AttributesManager attributesManager = enemyInstance.AddComponent<AttributesManager>();
-                InitializeEnemyAttributes(attributesManager);
             }
 
             SetTimeUntilSpawn();
         }
-    }
-
-    private void InitializeEnemyAttributes(AttributesManager attributesManager)
-    {
-        // Set the stats for the enemy
-        attributesManager.characterName = "Enemy";
-        attributesManager.maxHealth = 100;
-        attributesManager.currentHealth = 100;
-        attributesManager.maxMana = 50;
-        attributesManager.currentMana = 50;
-        attributesManager.maxXp = 100;
-        attributesManager.currentXp = 0;
-        attributesManager.currentLevel = 1;
-        attributesManager.attack = 10;
-        attributesManager.armor = 5;
-        attributesManager.critDamage = 1.5f;
-        attributesManager.critChance = 0.1f;
-        attributesManager.healthRegen = 1;
-        attributesManager.manaRegen = 1;
-        attributesManager.xpValue = 20;
     }
 
     private void SetTimeUntilSpawn()
