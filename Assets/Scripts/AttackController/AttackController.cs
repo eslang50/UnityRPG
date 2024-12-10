@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 namespace FantasyRpg.Combat
@@ -175,6 +176,7 @@ namespace FantasyRpg.Combat
 
             GameObject animationInstance = Instantiate(specialAttackOnePrefab, position, Quaternion.identity);
 
+
             StartCoroutine(ApplyAreaOfEffect(position, 3f, 5, 1f, (int)(attributesManager.attack * 1.5f)));
 
             Destroy(animationInstance, 5f);
@@ -269,12 +271,13 @@ namespace FantasyRpg.Combat
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 return hit.point;
             }
-            // Default to zero if no hit
-            return Vector3.zero; 
+
+            return Vector3.zero; // Return zero if no valid position is found
         }
     }
 }

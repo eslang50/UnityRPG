@@ -22445,12 +22445,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4759638158568417670, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
-      propertyPath: maxHealth
+      propertyPath: armor
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -4759638158568417670, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
+      propertyPath: attack
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -4759638158568417670, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
+      propertyPath: xpValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -4759638158568417670, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
+      propertyPath: manaRegen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4759638158568417670, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
+      propertyPath: maxHealth
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: -4759638158568417670, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
+      propertyPath: healthRegen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4759638158568417670, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
       propertyPath: currentHealth
-      value: 15
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 136948, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
       propertyPath: m_TagString
@@ -23635,9 +23655,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 139696, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1023549700}
-    - targetCorrespondingSourceObject: {fileID: 139696, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1023549706}
   m_SourcePrefab: {fileID: 100100000, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
 --- !u!1 &910887441 stripped
 GameObject:
@@ -26020,36 +26037,6 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &1023549706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910887441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e144280085be69a488f25605fd66fc7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterName: Magician
-  maxHealth: 100
-  currentHealth: 100
-  maxMana: 0
-  currentMana: 0
-  maxXp: 0
-  currentXp: 0
-  currentLevel: 0
-  xpValue: 10
-  healthRegen: 1
-  manaRegen: 1
-  attack: 10
-  armor: 0
-  critDamage: 1.5
-  critChance: 0.1
-  skinnedMeshes: []
-  dissolveRate: 0.05
-  refreshRate: 0.025
 --- !u!1 &1025525652
 GameObject:
   m_ObjectHideFlags: 0
@@ -31965,8 +31952,8 @@ MonoBehaviour:
   currentXp: 0
   currentLevel: 1
   xpValue: 10
-  healthRegen: 1
-  manaRegen: 1
+  healthRegen: 2
+  manaRegen: 5
   attack: 10
   armor: 10
   critDamage: 1.5
