@@ -43,9 +43,6 @@ public class EnemyMovement : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        Debug.Log("Current state: " + currentState);
-
-
         // Update state based on distance to player
         if (currentState != MovementState.Attack && distanceToPlayer <= attackRange)
         {
@@ -155,4 +152,5 @@ public class EnemyMovement : MonoBehaviour
         // Logic to deal damage to the player
         Debug.Log("Enemy dealt damage to the player!");
     }
+
 }
