@@ -14,9 +14,11 @@ namespace FantasyRpg.Combat
         public int currentHealth;
         public int maxMana;
         public int currentMana;
+
         public int maxXp;
         public int currentXp;
         public int currentLevel;
+        public int skillPoints = 0;
 
         public int xpValue = 10;
 
@@ -231,6 +233,7 @@ namespace FantasyRpg.Combat
                 currentMana = maxMana;
                 attack += 2;
                 armor += 1;
+                skillPoints += 1;
 
                 OnLevelUp?.Invoke(currentLevel);
 
