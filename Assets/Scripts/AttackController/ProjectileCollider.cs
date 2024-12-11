@@ -14,6 +14,7 @@ namespace FantasyRpg.Combat
         {
             this.attributesManager = attributesManager;
             this.damage = damage;
+            Destroy(gameObject, 3f);
         }
 
         private void Update()
@@ -23,6 +24,10 @@ namespace FantasyRpg.Combat
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.CompareTag("Player"))
+            {
+                return;
+            }
             if (other.CompareTag("Enemy"))
             {
                 attributesManager.Attack(other.gameObject, damage);
