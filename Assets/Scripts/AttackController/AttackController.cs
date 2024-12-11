@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace FantasyRpg.Combat
@@ -157,7 +158,7 @@ namespace FantasyRpg.Combat
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                if (Time.time >= abilityCooldowns["BasicAttackOne"])
+                if (Time.time >= abilityCooldowns["BasicAttackOne"] && !EventSystem.current.IsPointerOverGameObject())
                 {
                     StartCoroutine(BasicAttackOne());
                 }
