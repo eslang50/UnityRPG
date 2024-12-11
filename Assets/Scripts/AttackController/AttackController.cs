@@ -233,16 +233,20 @@ namespace FantasyRpg.Combat
             abilityCooldowns["BasicAttackOne"] = Time.time + basicAttackOneCd;
 
             animator.SetTrigger("BasicAttackOne");
-            yield return new WaitForSeconds(0.25f);
 
             Vector3 mousePosition = GetMouseWorldPosition();
             Vector3 direction = (mousePosition - transform.position).normalized;
 
-            float distanceMultiplier = 1.5f;
-            Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction * distanceMultiplier;
+            for (int i = 0; i < basicAttackOneLevel; i++)
+            {
+                yield return new WaitForSeconds(0.15f); // Delay between each projectile
 
-            GameObject projectileInstance = Instantiate(basicAttackOnePrefab, spawnPosition, Quaternion.LookRotation(direction));
-            projectileInstance.GetComponent<ProjectileCollider>().Initialize(attributesManager, (int)(attributesManager.attack * 1.25f));
+                float distanceMultiplier = 1.5f;
+                Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction * distanceMultiplier;
+
+                GameObject projectileInstance = Instantiate(basicAttackOnePrefab, spawnPosition, Quaternion.LookRotation(direction));
+                projectileInstance.GetComponent<ProjectileCollider>().Initialize(attributesManager, (int)(attributesManager.attack * 1.25f));
+            }
         }
 
         protected IEnumerator SpecialAttackOne()
