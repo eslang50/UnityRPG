@@ -40,6 +40,9 @@ namespace FantasyRpg.Combat
 
         private Material[] skinnedMaterials;
 
+        private Animator animator; 
+
+
         private void Start()
         {
             StartCoroutine(RegenerateHealthMana());
@@ -61,6 +64,11 @@ namespace FantasyRpg.Combat
             else
             {
                 Debug.LogWarning("No SkinnedMeshRenderers found on the GameObject or its children.");
+            }
+            animator = GetComponent<Animator>();
+            if (animator == null)
+            {
+                Debug.LogWarning("Animator component not found on " + gameObject.name);
             }
         }
         private void Update()
@@ -93,6 +101,9 @@ namespace FantasyRpg.Combat
             StatusPopUpGenerator.instance.CreatePopUp(popUpPosition + randomOffset, amount.ToString(), color ?? Color.yellow);
             OnTakeDamage?.Invoke(amount);
 
+            // Trigger red flash effect
+            StartCoroutine(FlashRed());
+
             // Reset the timer since the player was hit
             timeSinceLastHit = 0f;
 
@@ -102,9 +113,65 @@ namespace FantasyRpg.Combat
             }
         }
 
+        // Coroutine to flash red on damage
+        private IEnumerator FlashRed()
+        {
+            if (skinnedMeshes != null && skinnedMeshes.Length > 0)
+            {
+                foreach (var skinnedMesh in skinnedMeshes)
+                {
+                    foreach (var material in skinnedMesh.materials)
+                    {
+                        material.color = Color.red; // Set to red
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(0.2f); // Flash duration
+
+            if (skinnedMeshes != null && skinnedMeshes.Length > 0)
+            {
+                foreach (var skinnedMesh in skinnedMeshes)
+                {
+                    foreach (var material in skinnedMesh.materials)
+                    {
+                        material.color = Color.white; // Reset to white (or original color)
+                    }
+                }
+            }
+        }
+
         private void HandleDeath()
         {
-            StartCoroutine(Dissolve());  // Start dissolve effect
+            if (animator != null)
+            {
+                animator.SetTrigger("Death"); // Trigger the death animation
+            }
+            StartCoroutine(DeathSequence());
+            GameObject musicTriggerObject = GameObject.Find("BossZone"); 
+            if (musicTriggerObject != null)
+            {
+                if (musicTriggerObject.TryGetComponent<BossmusicTrigger>(out var musicTrigger))
+                {
+                    musicTrigger.StopBossMusic();
+                    Debug.Log("Boss music stopped.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("BossMusicTrigger GameObject not found.");
+            }
+        }
+
+        private IEnumerator DeathSequence()
+        {
+            if (animator != null)
+            {
+                // Wait for the death animation to finish
+                yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+            }
+
+            StartCoroutine(Dissolve()); // Start dissolve effect after the animation
         }
 
         private IEnumerator Dissolve()

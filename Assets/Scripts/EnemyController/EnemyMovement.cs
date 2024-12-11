@@ -44,18 +44,24 @@ public class EnemyMovement : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // Update state based on distance to player
-        if (currentState != MovementState.Attack && distanceToPlayer <= attackRange)
+        if (currentState == MovementState.Attack || distanceToPlayer > attackRange)
+        {
+            if (currentState == MovementState.Attack || distanceToPlayer > followRange)
+            {
+                if (currentState == MovementState.Follow && distanceToPlayer > followRange)
+                {
+                    currentState = MovementState.Idle;
+                    stateTimer = 0f;
+                }
+            }
+            else
+            {
+                currentState = MovementState.Follow;
+            }
+        }
+        else
         {
             currentState = MovementState.Attack;
-        }
-        else if (currentState != MovementState.Attack && distanceToPlayer <= followRange)
-        {
-            currentState = MovementState.Follow;
-        }
-        else if (currentState == MovementState.Follow && distanceToPlayer > followRange)
-        {
-            currentState = MovementState.Idle;
-            stateTimer = 0f;
         }
 
 
