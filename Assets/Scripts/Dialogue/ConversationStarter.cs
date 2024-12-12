@@ -5,12 +5,18 @@ public class ConversationStarter : MonoBehaviour
 {
     [SerializeField] private NPCConversation myConversation;
 
-    private void OnTriggerStay(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Conversation trigger");
             ConversationManager.Instance.StartConversation(myConversation);
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        ConversationManager.Instance.EndConversation();
+
     }
 }
