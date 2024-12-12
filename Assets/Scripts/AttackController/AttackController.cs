@@ -357,9 +357,10 @@ namespace FantasyRpg.Combat
 
         private Vector3 GetMouseWorldPosition()
         {
+            int layerMask = LayerMask.GetMask("Ground", "Enemy");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 return hit.point;
             }
