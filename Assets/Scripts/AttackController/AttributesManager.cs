@@ -14,9 +14,11 @@ namespace FantasyRpg.Combat
         public int currentHealth;
         public int maxMana;
         public int currentMana;
+
         public int maxXp;
         public int currentXp;
         public int currentLevel;
+        public int skillPoints = 0;
 
         public int xpValue = 10;
 
@@ -40,15 +42,17 @@ namespace FantasyRpg.Combat
 
         private Material[] skinnedMaterials;
 
-        private Animator animator; 
+        private Animator animator;
 
 
         private void Start()
         {
             StartCoroutine(RegenerateHealthMana());
-            GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshProUGUI>().text = characterName;
-            GameObject.Find("LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = currentLevel.ToString();
-
+            if (gameObject.CompareTag("Player"))
+            { 
+                GameObject.Find("CharacterName").GetComponent<TMPro.TextMeshProUGUI>().text = characterName;
+                GameObject.Find("LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = currentLevel.ToString();
+            }
             if (skinnedMeshes == null || skinnedMeshes.Length == 0)
             {
                 skinnedMeshes = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -231,11 +235,14 @@ namespace FantasyRpg.Combat
                 currentMana = maxMana;
                 attack += 2;
                 armor += 1;
+                skillPoints += 1;
 
                 OnLevelUp?.Invoke(currentLevel);
 
-                // Update UI
-                GameObject.Find("LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = currentLevel.ToString();
+                if (gameObject.CompareTag("Player"))
+                {
+                    GameObject.Find("LevelText").GetComponent<TMPro.TextMeshProUGUI>().text = currentLevel.ToString();
+                }
             }
         }
     }
