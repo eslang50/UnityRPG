@@ -16,6 +16,13 @@ namespace FantasyRpg.Combat
         public GameObject specialAttackThreePrefab;
         public AttributesManager attributesManager;
 
+        public AudioSource audioSource;
+        public AudioClip meleeAttackSound;
+        public AudioClip basicAttackSound;
+        public AudioClip specialAttackOneSound;
+        public AudioClip specialAttackTwoSound;
+        public AudioClip specialAttackThreeSound;
+
         private int basicAttackOneLevel = 1;
         private int specialAttackOneLevel = 1;
         private int specialAttackTwoLevel = 1;
@@ -155,12 +162,16 @@ namespace FantasyRpg.Combat
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 animator.SetTrigger("MeleeAttack");
+                audioSource.clip = meleeAttackSound;
+                audioSource.Play();
             }
             else if (Input.GetMouseButtonDown(0))
             {
                 if (Time.time >= abilityCooldowns["BasicAttackOne"] && !EventSystem.current.IsPointerOverGameObject())
                 {
                     StartCoroutine(BasicAttackOne());
+                    audioSource.clip = basicAttackSound;
+                    audioSource.Play();
                 }
             }
             else if (Input.GetKeyDown(KeyCode.E))
@@ -168,6 +179,8 @@ namespace FantasyRpg.Combat
                 if (Time.time >= abilityCooldowns["SpecialAttackOne"])
                 {
                     StartCoroutine(SpecialAttackOne());
+                    audioSource.clip = specialAttackOneSound;
+                    audioSource.Play();
                 }
             }
             else if (Input.GetKeyDown(KeyCode.R))
@@ -175,6 +188,8 @@ namespace FantasyRpg.Combat
                 if (Time.time >= abilityCooldowns["SpecialAttackTwo"])
                 {
                     StartCoroutine(SpecialAttackTwo());
+                    audioSource.clip = specialAttackTwoSound;
+                    audioSource.Play();
                 }
             }
             else if (Input.GetKeyDown(KeyCode.F))
@@ -182,6 +197,8 @@ namespace FantasyRpg.Combat
                 if (Time.time >= abilityCooldowns["SpecialAttackThree"])
                 {
                     StartCoroutine(SpecialAttackThree());
+                    audioSource.clip = specialAttackThreeSound;
+                    audioSource.Play();
                 }
             }
             UpdateCooldownUI();

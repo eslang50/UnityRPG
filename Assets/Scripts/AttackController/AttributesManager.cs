@@ -44,6 +44,9 @@ namespace FantasyRpg.Combat
 
         private Animator animator;
 
+        public Canvas deathCanvas;
+
+
 
         private void Start()
         {
@@ -152,18 +155,22 @@ namespace FantasyRpg.Combat
                 animator.SetTrigger("Death"); // Trigger the death animation
             }
             StartCoroutine(DeathSequence());
-            GameObject musicTriggerObject = GameObject.Find("BossZone"); 
-            if (musicTriggerObject != null)
+
+            if (gameObject.name == "Boss")
             {
-                if (musicTriggerObject.TryGetComponent<BossmusicTrigger>(out var musicTrigger))
+                GameObject musicTriggerObject = GameObject.Find("BossZone"); 
+                if (musicTriggerObject != null)
                 {
-                    musicTrigger.StopBossMusic();
-                    Debug.Log("Boss music stopped.");
+                    if (musicTriggerObject.TryGetComponent<BossmusicTrigger>(out var musicTrigger))
+                    {
+                        musicTrigger.StopBossMusic();
+                        Debug.Log("Boss music stopped.");
+                    }
                 }
-            }
-            else
-            {
-                Debug.LogWarning("BossMusicTrigger GameObject not found.");
+                else
+                {
+                    Debug.LogWarning("BossMusicTrigger GameObject not found.");
+                }
             }
         }
 

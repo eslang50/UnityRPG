@@ -511,6 +511,7 @@ MonoBehaviour:
   skinnedMeshes: []
   dissolveRate: 0.0125
   refreshRate: 0.025
+  deathCanvas: {fileID: 0}
 --- !u!114 &1352997549064944981
 MonoBehaviour:
   m_ObjectHideFlags: 0
