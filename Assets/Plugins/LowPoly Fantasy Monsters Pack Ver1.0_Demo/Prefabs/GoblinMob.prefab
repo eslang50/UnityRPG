@@ -500,6 +500,7 @@ MonoBehaviour:
   maxXp: 0
   currentXp: 0
   currentLevel: 1
+  skillPoints: 0
   xpValue: 10
   healthRegen: 0
   manaRegen: 0

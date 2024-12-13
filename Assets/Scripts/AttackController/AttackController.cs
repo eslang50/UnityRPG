@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace FantasyRpg.Combat
@@ -57,10 +58,36 @@ namespace FantasyRpg.Combat
         private Image specialAttackThreeCooldownImage;
         [SerializeField]
         private TMP_Text specialAttackThreeCooldownText;
+
+        [Header("UI items for Ability Levels")]
+        [SerializeField]
+        private TMP_Text basicAttackOneLevelText;
+        [SerializeField]
+        private TMP_Text specialAttackOneLevelText;
+        [SerializeField]
+        private TMP_Text specialAttackTwoLevelText;
+        [SerializeField]
+        private TMP_Text specialAttackThreeLevelText;
+
+        [Header("UI items for Skill Points")]
+        [SerializeField]
+        private Button basicAttackOneUpgradeButton;
+        [SerializeField]
+        private Button specialAttackOneUpgradeButton;
+        [SerializeField]
+        private Button specialAttackTwoUpgradeButton;
+        [SerializeField]
+        private Button specialAttackThreeUpgradeButton;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
             InitializeAbilities();
+
+            basicAttackOneUpgradeButton.onClick.AddListener(LevelUpBasicAttackOne);
+            specialAttackOneUpgradeButton.onClick.AddListener(LevelUpSpecialAttackOne);
+            specialAttackTwoUpgradeButton.onClick.AddListener(LevelUpSpecialAttackTwo);
+            specialAttackThreeUpgradeButton.onClick.AddListener(LevelUpSpecialAttackThree);
         }
 
         private void InitializeAbilities()
@@ -75,10 +102,59 @@ namespace FantasyRpg.Combat
             manaCosts["SpecialAttackTwo"] = 35;
             manaCosts["SpecialAttackThree"] = 40;
 
-            GameObject.Find("AbilityOneText").GetComponent<TMPro.TextMeshProUGUI>().text = basicAttackOneLevel.ToString();
-            GameObject.Find("AbilityTwoText").GetComponent<TMPro.TextMeshProUGUI>().text = specialAttackOneLevel.ToString();
-            GameObject.Find("AbilityThreeText").GetComponent<TMPro.TextMeshProUGUI>().text = specialAttackTwoLevel.ToString();
-            GameObject.Find("AbilityFourText").GetComponent<TMPro.TextMeshProUGUI>().text = specialAttackThreeLevel.ToString();
+            UpdateAbilityLevelUI();
+        }
+
+        private void UpdateAbilityLevelUI()
+        {
+            basicAttackOneLevelText.text = basicAttackOneLevel.ToString();
+            specialAttackOneLevelText.text = specialAttackOneLevel.ToString();
+            specialAttackTwoLevelText.text = specialAttackTwoLevel.ToString();
+            specialAttackThreeLevelText.text = specialAttackThreeLevel.ToString();
+        }
+
+        public void LevelUpBasicAttackOne()
+        {
+            if (attributesManager.skillPoints > 0)
+            {
+                basicAttackOneLevel++;
+                attributesManager.skillPoints--;
+                UpdateAbilityLevelUI();
+                UpdateSkillPointUI();
+            }
+        }
+
+        public void LevelUpSpecialAttackOne()
+        {
+            if (attributesManager.skillPoints > 0)
+            {
+                specialAttackOneLevel++;
+                attributesManager.skillPoints--;
+                UpdateAbilityLevelUI();
+                UpdateSkillPointUI();
+            }
+        }
+
+        public void LevelUpSpecialAttackTwo()
+        {
+            if (attributesManager.skillPoints > 0)
+            {
+                specialAttackTwoLevel++;
+                attributesManager.skillPoints--;
+                UpdateAbilityLevelUI();
+                UpdateSkillPointUI();
+            }
+        }
+
+        public void LevelUpSpecialAttackThree()
+        {
+            if (attributesManager.skillPoints > 0)
+            {
+                specialAttackThreeLevel++;
+                attributesManager.skillPoints--;
+                UpdateAbilityLevelUI();
+                UpdateSkillPointUI();
+            }
         }
 
         void Update()
@@ -91,7 +167,7 @@ namespace FantasyRpg.Combat
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                if (Time.time >= abilityCooldowns["BasicAttackOne"])
+                if (Time.time >= abilityCooldowns["BasicAttackOne"] && !EventSystem.current.IsPointerOverGameObject())
                 {
                     StartCoroutine(BasicAttackOne());
                     audioSource.clip = basicAttackSound;
@@ -126,6 +202,7 @@ namespace FantasyRpg.Combat
                 }
             }
             UpdateCooldownUI();
+            UpdateSkillPointUI();
         }
 
         private void UpdateCooldownUI()
@@ -134,6 +211,15 @@ namespace FantasyRpg.Combat
             UpdateCooldown("SpecialAttackOne", specialAttackOneCooldownImage, specialAttackOneCooldownText, specialAttackOneCd);
             UpdateCooldown("SpecialAttackTwo", specialAttackTwoCooldownImage, specialAttackTwoCooldownText, specialAttackTwoCd);
             UpdateCooldown("SpecialAttackThree", specialAttackThreeCooldownImage, specialAttackThreeCooldownText, specialAttackThreeCd);
+        }
+
+        private void UpdateSkillPointUI()
+        {
+            bool hasSkillPoints = attributesManager.skillPoints > 0;
+            basicAttackOneUpgradeButton.gameObject.SetActive(hasSkillPoints);
+            specialAttackOneUpgradeButton.gameObject.SetActive(hasSkillPoints);
+            specialAttackTwoUpgradeButton.gameObject.SetActive(hasSkillPoints);
+            specialAttackThreeUpgradeButton.gameObject.SetActive(hasSkillPoints);
         }
 
         private void UpdateCooldown(string ability, Image cooldownImage, TMP_Text cooldownText, float cooldownTime)
@@ -164,16 +250,20 @@ namespace FantasyRpg.Combat
             abilityCooldowns["BasicAttackOne"] = Time.time + basicAttackOneCd;
 
             animator.SetTrigger("BasicAttackOne");
-            yield return new WaitForSeconds(0.25f);
 
             Vector3 mousePosition = GetMouseWorldPosition();
             Vector3 direction = (mousePosition - transform.position).normalized;
 
-            float distanceMultiplier = 1.5f;
-            Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction * distanceMultiplier;
+            for (int i = 0; i < basicAttackOneLevel; i++)
+            {
+                yield return new WaitForSeconds(0.15f); // Delay between each projectile
 
-            GameObject projectileInstance = Instantiate(basicAttackOnePrefab, spawnPosition, Quaternion.LookRotation(direction));
-            projectileInstance.GetComponent<ProjectileCollider>().Initialize(attributesManager, (int)(attributesManager.attack * 1.25f));
+                float distanceMultiplier = 1.5f;
+                Vector3 spawnPosition = transform.position + new Vector3(0, _groundOffset, 0) + direction * distanceMultiplier;
+
+                GameObject projectileInstance = Instantiate(basicAttackOnePrefab, spawnPosition, Quaternion.LookRotation(direction));
+                projectileInstance.GetComponent<ProjectileCollider>().Initialize(attributesManager, (int)(attributesManager.attack * 1.25f));
+            }
         }
 
         protected IEnumerator SpecialAttackOne()
@@ -284,9 +374,10 @@ namespace FantasyRpg.Combat
 
         private Vector3 GetMouseWorldPosition()
         {
+            int layerMask = LayerMask.GetMask("Ground", "Enemy");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 return hit.point;
             }
