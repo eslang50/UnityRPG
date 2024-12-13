@@ -40,7 +40,9 @@ namespace FantasyRpg.Combat
 
         private Material[] skinnedMaterials;
 
-        private Animator animator; 
+        private Animator animator;
+
+         public Canvas deathCanvas;
 
 
         private void Start()
